@@ -11,12 +11,12 @@ Go to the cloned directory and activate anaconda. Create a new envirnoment using
 
 Note that the cvxpy package has recently undergone some updates that make the latest editions incompatible with the code used in the submission. As such, we must install cvxpy manually with pip as follows: 
 
-    - Check to make sure you are using the version of pip local to this specific anaconda environment: 
-        which pip
-    - You should see something like 
-        /anaconda3/envs/location_priv_test/bin/pip
-    - Install the compatible version of cvxpy to your conda environment using pip 
-        pip install cvxpy==1.0.25 
+- Check to make sure you are using the version of pip local to this specific anaconda environment: 
+    which pip
+- You should see something like 
+    /anaconda3/envs/location_priv_test/bin/pip
+- Install the compatible version of cvxpy to your conda environment using pip 
+    pip install cvxpy==1.0.25 
 
 ## Usage
 
