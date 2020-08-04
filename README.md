@@ -14,15 +14,15 @@ Note that the cvxpy package has recently undergone some updates that make the la
 
 - Check to make sure you are using the version of pip local to this specific anaconda environment: 
 
-    which pip
+        which pip
 
 - You should see something like 
 
-    /anaconda3/envs/location_priv_test/bin/pip
+        /anaconda3/envs/location_priv_test/bin/pip
 
 - Install the compatible version of cvxpy to your conda environment using pip 
 
-    pip install cvxpy==1.0.25 
+        pip install cvxpy==1.0.25 
 
 ## Usage
 
