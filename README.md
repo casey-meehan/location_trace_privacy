@@ -5,9 +5,10 @@ Welcome to the anonymized github repo for the NeurIPS paper under reivew: "Locat
 ## Installation 
 
 To make use of this repo yourself, first clone it, and then install [anaconda](https://www.anaconda.com/) (if you do not already have it installed). 
-Go to the cloned directory and activate anaconda. Create a new envirnoment using the requirements.txt file: 
+Go to the cloned directory and activate anaconda. Create a new envirnoment using the requirements.txt file, and activate it: 
 
     conda create --name location_priv_test --file requirements.txt
+    conda activate location_priv_test
 
 Note that the cvxpy package has recently undergone some updates that make the latest editions incompatible with the code used in the submission. As such, we must install cvxpy manually with pip as follows: 
 
