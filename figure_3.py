@@ -376,12 +376,12 @@ l_eff_temp = np.load('./saved_data/l_eff_temp.npy')
 #which figures to make
 three_a = True 
 three_b = True 
-three_c = False 
-three_d = False 
-three_e = False 
-three_f = False  
-three_g = False 
-three_h = False 
+three_c = True 
+three_d = True 
+three_e = True 
+three_f = True  
+three_g = True 
+three_h = True 
 
 #################
 ### FIGURE 3A ###

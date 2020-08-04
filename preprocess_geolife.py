@@ -242,8 +242,9 @@ base_dir = args.bdir
 
 #get GeoLife data in numpy arrays 
 print('Getting GeoLife data...') 
-#user_datas = preproc_data(base_dir) 
-user_datas = np.load('./user_datas.npy', allow_pickle=True)
+user_datas = preproc_data(base_dir) 
+#use following line instead of above line if user_datas has already been loaded 
+#user_datas = np.load('./user_datas.npy', allow_pickle=True)
 
 #downsample data to traces around 5m in duration and no more than 50pts in length 
 print('Downsampling...') 
