@@ -30,9 +30,9 @@ There are three .py files related to the paper:
 
 - preprocess_geolife.py: this produces the effective lengthscales of the location trace data (GeoLife) l_eff_x.npy and l_eff_y.npy seen in saved_data/  
 - preprocess_SML2010.py: this produces the effective lengthscales of the home temperature data (SML2010) l_eff_temp.npy seen in saved_data/  
-- figure_3.py: This runs all experiments and produces all figures seen in Figure 3 of the paper. 
+- figure_2.py: This runs all experiments and produces all figures seen in Figure 2 of the paper. 
 
 The preprocessed data is relatively small in size, and is included with the github repo. As such, it is not necessary to run either of the preprocess_xxx.py files to run the experiments. You may simply enter 
 
-    python3 figure_3.py 
+    python3 figure_2.py 
 
