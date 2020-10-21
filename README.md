@@ -1,6 +1,6 @@
 # Location Trace Privacy 
 
-Welcome to the anonymized github repo for the NeurIPS paper under reivew: "Location Trace Privacy Under Conditional Priors" 
+Welcome to the anonymized github repo for the AISTATS paper under reivew: "Location Trace Privacy Under Conditional Priors" 
 
 ## Installation 
 

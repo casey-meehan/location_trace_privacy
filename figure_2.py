@@ -13,6 +13,7 @@ from pathlib import Path
 import matplotlib as mpl
 mpl.rcdefaults()
 plt.rc('axes', labelsize=30)    # fontsize of the x and y labels
+plt.rc('axes', linewidth=3)     #border of figures 
 plt.rc('xtick', labelsize=30)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=30)    # fontsize of the tick labels
 plt.rc('legend', fontsize=30)    # legend fontsize
@@ -428,11 +429,11 @@ l_effs = np.concatenate((l_eff_x, l_eff_y), axis = 0)
 l_eff_temp = np.load('./saved_data/l_eff_temp.npy') 
 
 #which figures to make
-two_a = False 
-two_b = False 
-two_c = False 
-two_d = False 
-two_e = False 
+two_a = True 
+two_b = True 
+two_c = True
+two_d = True 
+two_e = True 
 two_f = True  
 two_g = True 
 two_h = True 
@@ -531,7 +532,7 @@ if two_c == True:
         CI_iso_uni = np.mean(Sigma_xgz_iso_uni.diagonal())
         ISO_uni_CIs.append(CI_iso_uni)
 
-    plot_sweep_data(l_effs, len_scales_sq, 2*np.sqrt(np.array(SDP_CIs)), 2*np.sqrt(np.array(ISO_uni_CIs)), None, 'figure_3c.png', 'RBF All Basic Secrets')
+    plot_sweep_data(l_effs, len_scales_sq, 2*np.sqrt(np.array(SDP_CIs)), 2*np.sqrt(np.array(ISO_uni_CIs)), None, 'figure_2c.png', 'RBF All Basic Secrets')
 
 #################
 ### FIGURE 2D ###
