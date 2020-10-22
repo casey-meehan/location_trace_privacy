@@ -2,12 +2,12 @@
 #Download the GeoLife dataset at 
 #https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/
 
-#In our experiments we focus on traces that are approximately 5m in length 
+#In our experiments we focus on traces that are approximately 5min in duration 
 #and are less than 50 locations in length. This includes about 55% of the original GeoLife dataset. 
-#We then limit the number of traces / user to 50 (some users have contributed a large share of traces) 
+#We then limit the number of traces per user to 50 (some users have contributed a large share of traces) 
 #to avoid overrepresentation on their behalf. This leaves us with about 20% of the dataset. 
 #These limitations are largely to restrict the problem cleanly, but make little difference in the validity 
-#of our claims. Locations in traces are highly correlated virtually no matter how the data is sliced. 
+#of our claims. Locations in traces are highly correlated virtually any way the data is sliced. 
 
 import pandas as pd
 import numpy as np
@@ -246,7 +246,7 @@ user_datas = preproc_data(base_dir)
 #use following line instead of above line if user_datas has already been loaded 
 #user_datas = np.load('./user_datas.npy', allow_pickle=True)
 
-#downsample data to traces around 5m in duration and no more than 50pts in length 
+#downsample data to traces around 5min in duration and no more than 50pts in length 
 print('Downsampling...') 
 user_datas_ds = downsample_data(user_datas, min_time = 240, max_time = 320, max_samps=50)
 
