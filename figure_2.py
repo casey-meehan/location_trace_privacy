@@ -144,63 +144,6 @@ def get_Sigma_z(Sigma, s_idx, MSE_max, is_print = False):
     
     return Sigma_z
 
-#def sig_eff(Sigma, Sigma_z, s_idx):
-#    """get effective Sigma for computing Renyi divergence given s indices
-#    Inputs:
-#        - Sigma: n X n covariance matrix being considered
-#        - Sigma_z: n X n noise covariance matrix
-#        - s_idx: k-element 1d np array with indices of hypothesized points s
-#    Returns:
-#        - Sig_eff: k X k effective matrix for computing Renyi divergence loss
-#    """
-#    n_pts = Sigma.shape[0]
-#    u_idx = np.array([True]*n_pts)
-#    u_idx[s_idx] = False
-#    u_idx = np.arange(n_pts)[u_idx]
-#    u_idx = u_idx[:,None]
-#
-#    A, Sig_ugs = get_A_and_B_info(Sigma, s_idx)
-#    Sig_z_uu = Sigma_z[u_idx, u_idx.T]
-#    B = np.linalg.pinv(Sig_ugs + Sig_z_uu) 
-#    Sig_eff = A.T.dot(B).dot(A)
-#    return Sig_eff
-
-#def eig_vecs_vals(Sigma):
-#    """Return eigenvectors and eigenvalues of matrix in descending order of magnitude
-#    Inputs:
-#        - Sigma: n X n matrix
-#    Returns:
-#        - v: n X n matrix of eigenvecs starting with v[:,0], the largest in magnitude
-#        - w: n vector of eigenvals corresponding to each eigenvec
-#    """
-#    w, v = np.linalg.eig(Sigma)
-#    v = v[:,np.argsort(w)[::-1]]
-#    w = w[np.argsort(w)[::-1]]
-#    return w, v
-
-#def get_priv_loss(Sigma, Sigma_z, s_idx, lam = 5, r = 1): 
-#    """Returns the Renyi worst case privacy loss for noise covariance matrix Sigma_z_sq  with
-#    conditional 's' points given by s_idx
-#    Inputs: 
-#        Sigma: Covariance matrix of X points 
-#        Sigma_z: Noise covariance matrix  
-#        s_idx: indices of points to condition on 
-#    Outpus: 
-#        R_s_st: Worst case Renyi privacy loss 
-#        alph_str: alpha star (inferential privacy loss)
-#        ind_loss: loss of the independent noise (GI privacy loss)
-#    """
-#    #dependent loss
-#    Sig_eff = sig_eff(Sigma, Sigma_z, s_idx)
-#    w, v = eig_vecs_vals(Sig_eff)
-#    alph_str = w[0]
-#    
-#    #independent loss
-#    sig_s_sq = Sigma_z[s_idx, s_idx]
-#    ind_loss = (1 / sig_s_sq).sum() / len(s_idx)
-#    
-#    R_s_st = 2 * lam * len(s_idx) * r**2 * (ind_loss + alph_str)
-#    return R_s_st, alph_str, ind_loss
 
 def plot_sweep_data(l_effs, len_scales_sq, SDP_CIs, ISO_uni_CIs, ISO_conc_CIs, fname, title, misspec = False, ylabel = False): 
     
@@ -237,42 +180,6 @@ def plot_sweep_data(l_effs, len_scales_sq, SDP_CIs, ISO_uni_CIs, ISO_conc_CIs, f
     plt.savefig('./images/' + fname, bbox_inches = 'tight', pad_inches = 0)
     plt.show()
 
-
-#def plot_sweep_data(l_effs, len_scales_sq, SDP_totals, ISO_totals, fname, title):
-#    """Plot util for figures 3c) -> h) 
-#    """
-#    fig, axs = plt.subplots(nrows = 2, sharex = True, gridspec_kw={'hspace': 0, 'height_ratios':[0.3,1]})
-#
-#    #Get distribution stats
-#    quartile1, median, quartile3 = np.percentile(l_effs, [25, 50, 75])
-#    lmin = np.sqrt(np.min(len_scales_sq))
-#    lmax = np.sqrt(np.max(len_scales_sq))
-#
-#    #Plot distribution
-#    l_effs_filter = (l_effs > lmin) * (l_effs < lmax)
-#    l_effs_ = l_effs[l_effs_filter]
-#    parts = axs[0].violinplot(l_effs_, vert = False,
-#                               showmeans = False, showmedians = False, showextrema=False)
-#
-#    parts['bodies'][0].set_facecolor('gray')
-#    parts['bodies'][0].set_edgecolor('black')
-#    parts['bodies'][0].set_alpha(0.7)
-#
-#    axs[0].hlines(1, quartile1, quartile3, color='k', linestyle='-', lw=10)
-#    axs[0].hlines(1, lmin, lmax, color='k', linestyle='-', lw=1)
-#    axs[0].scatter(median, 1, color='white', marker = 'o', s=500, zorder=3)
-#
-#    axs[0].axes.get_yaxis().set_visible(False)
-#
-#    #plot data
-#    axs[1].plot(np.sqrt(len_scales_sq), np.array(SDP_totals), '-o', label = 'SDP')
-#    axs[1].plot(np.sqrt(len_scales_sq), np.array(ISO_totals),'-o', label = 'Isotropic')
-#    plt.legend()
-#    plt.xlabel("$l_{eff}$")
-#    plt.ylabel("$L_{priv}$")
-#    axs[0].set_title(title)
-#    plt.savefig('./images/' + fname, bbox_inches = 'tight', pad_inches = 0)
-#    plt.show()
 
 def get_super_sigma_z(Sigma, secrets, MSE_max, is_print = False):
     """Finds an optimal noise covariance matrix for each listed secret
@@ -333,89 +240,6 @@ def get_posterior_cov(Sigma, Sigma_z):
 
     return Sigma_xgz
 
-#def get_multi_secret_loss(Sigma, Sigma_z, secrets, is_print = False): 
-#    #Look at privacy loss and compare with isotropic
-#    """Looks at the privacy loss due to direct and inferential loss for 
-#    covariance matrix Sigma_z for each secret and compares with isotropic noise of same trace 
-#    Inputs: 
-#        -Sigma: data covariance matrix 
-#        -Sigma_z: noise covariance matrix to compare
-#        -secrets: list of secrets to check privacy loss for
-#        -is_print: print problem status
-#    Returns: 
-#        -total_SDP: total privacy loss for the SDP
-#        -total ISO: total privacy loss for isotropic noise 
-#    """
-#    n_pts = Sigma.shape[0]
-#    alph_star_sdp = []
-#    dir_loss_sdp = []
-#
-#    alph_star_iso = []
-#    dir_loss_iso = []
-#
-#    Sigma_z_iso = (np.trace(Sigma_z) / n_pts) * np.eye(n_pts)
-#
-#    for s_idx in secrets: 
-#        if is_print: 
-#            print('Secret:', s_idx)
-#        _, alph_star, dir_loss = get_priv_loss(Sigma, Sigma_z, s_idx)
-#        alph_star_sdp.append(alph_star)
-#        dir_loss_sdp.append(dir_loss)
-#        if is_print:
-#            print('SDP Total:', alph_star + dir_loss, 'alph:', alph_star, 'direct:', dir_loss)
-#
-#        _, alph_star, dir_loss = get_priv_loss(Sigma, Sigma_z_iso, s_idx)
-#        alph_star_iso.append(alph_star)
-#        dir_loss_iso.append(dir_loss)
-#        if is_print:
-#            print('ISO Total:', alph_star + dir_loss, 'alph:', alph_star, 'direct:', dir_loss)
-#    total_SDP = np.sum(alph_star_sdp) + np.sum(dir_loss_sdp)
-#    total_ISO = np.sum(alph_star_iso) + np.sum(dir_loss_iso)
-#    if is_print:
-#        print('\nTotal SDP:', np.sum(alph_star_sdp) + np.sum(dir_loss_sdp))
-#        print('\nTotal ISO:', np.sum(alph_star_iso) + np.sum(dir_loss_iso))
-#    return total_SDP, total_ISO
-
-#def plot_sweep_iso_data(l_effs, len_scales_sq, noise_vars, L_privs, fname, title): 
-#    """plot utility for figures 3a) -> 3b) 
-#    """
-#    fig, axs = plt.subplots(nrows = 2, sharex = True, gridspec_kw={'hspace': 0, 'height_ratios':[0.3,1]})
-#    
-#    #Get distribution stats
-#    quartile1, median, quartile3 = np.percentile(l_effs, [25, 50, 75])
-#    lmin = np.sqrt(np.min(len_scales_sq))
-#    lmax = np.sqrt(np.max(len_scales_sq))
-#    
-#    #Plot distribution
-#    l_effs_filter = (l_effs > lmin) * (l_effs < lmax)
-#    l_effs_ = l_effs[l_effs_filter]
-#    parts = axs[0].violinplot(l_effs_, vert = False, 
-#                               showmeans = False, showmedians = False, showextrema=False)
-#    
-#    parts['bodies'][0].set_facecolor('gray')
-#    parts['bodies'][0].set_edgecolor('black')
-#    parts['bodies'][0].set_alpha(0.7)
-#    
-#    axs[0].hlines(1, quartile1, quartile3, color='k', linestyle='-', lw=10)
-#    axs[0].hlines(1, lmin, lmax, color='k', linestyle='-', lw=1)
-#    axs[0].scatter(median, 1, color='white', marker = 'o', s=500, zorder=3)
-#    
-#    axs[0].axes.get_yaxis().set_visible(False)
-#    
-#    #plot data
-#    for nv_idx in range(len(noise_vars)): 
-#        p = axs[1].plot(np.sqrt(len_scales_sq), L_privs[:, nv_idx], label = 'MSE = {0:n}%'.format(100 * noise_vars[nv_idx]))
-#        #plot baseline
-#        axs[1].plot(np.sqrt(len_scales_sq), inds[:, nv_idx], '--', color = p[0].get_color(),
-#                linewidth = 3)
-#
-#    plt.legend()
-#    plt.xlabel("$l_{eff}$")
-#    plt.ylabel("$L_{priv}$")
-#    axs[0].set_title('Iso. Mech\'s: RBF Basic Secret')
-#
-#    plt.savefig('./images/' + fname, bbox_inches = 'tight', pad_inches = 0)
-#    plt.show()
 
 #Make figure directory 
 Path("./images").mkdir(parents=True, exist_ok=True)
